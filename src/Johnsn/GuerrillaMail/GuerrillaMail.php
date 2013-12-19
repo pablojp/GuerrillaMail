@@ -11,12 +11,6 @@ class GuerrillaMail
     private $connection = null;
 
     /**
-     * sid_token
-     * @var null
-     */
-    private $sid_token = null;
-
-    /**
      * Available domains
      * @var array
      */
@@ -26,13 +20,10 @@ class GuerrillaMail
 
     /**
      * @param $connection
-     * @param null $sid_token
      */
-    public function __construct($connection, $sid_token = null)
+    public function __construct($connection)
     {
         $this->connection = $connection;
-
-        $this->sid_token = $sid_token;
     }
 
     public function __get($key)
@@ -47,12 +38,12 @@ class GuerrillaMail
      * @param string $lang
      * @return mixed
      */
-    public function get_email_address($lang = 'en')
+    public function get_email_address($sid_token = null, $lang = 'en')
     {
         $action = "get_email_address";
         $options = array(
             'lang' => $lang,
-            'sid_token' => $this->sid_token,
+            'sid_token' => $sid_token,
         );
 
         return $this->_retrieve($action, $options);
@@ -65,12 +56,12 @@ class GuerrillaMail
      * @param int $seq mail_id sequence number starting point
      * @return mixed
      */
-    public function check_email($seq = 0)
+    public function check_email($sid_token, $seq = 0)
     {
         $action = "check_email";
         $options = array(
             'seq' => $seq,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token,
         );
 
         return $this->_retrieve($action, $options);
@@ -85,12 +76,12 @@ class GuerrillaMail
      * @param int $seq mail_id sequence number starting point
      * @return mixed
      */
-    public function get_email_list($offset = 0, $seq = 0)
+    public function get_email_list($sid_token, $offset = 0, $seq = 0)
     {
         $action = "get_email_list";
         $options = array(
             'offset' => $offset,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token
         );
 
         if(!empty($seq))
@@ -107,12 +98,12 @@ class GuerrillaMail
      * @param $email_id mail_id of the requested email
      * @return bool
      */
-    public function fetch_email($email_id)
+    public function fetch_email($sid_token, $email_id)
     {
         $action = "fetch_email";
         $options = array(
             'email_id' => $email_id,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token
         );
 
         return $this->_retrieve($action, $options);
@@ -125,13 +116,13 @@ class GuerrillaMail
      * @param string $lang
      * @return bool
      */
-    public function set_email_address($email_user, $lang = 'en')
+    public function set_email_address($sid_token, $email_user, $lang = 'en')
     {
         $action = "set_email_user";
         $options = array(
             'email_user' => $email_user,
             'lang' => $lang,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token
         );
 
         return $this->_transmit($action, $options);
@@ -143,12 +134,12 @@ class GuerrillaMail
      * @param $email_address
      * @return bool
      */
-    public function forget_me($email_address)
+    public function forget_me($sid_token, $email_address)
     {
         $action = "forget_me";
         $options = array(
             'email_addr' => $email_address,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token
         );
 
         return $this->_transmit($action, $options);
@@ -159,12 +150,12 @@ class GuerrillaMail
      * @param $email_ids list of mail_ids to delete from the server.
      * @return bool
      */
-    public function del_email($email_ids)
+    public function del_email($sid_token, $email_ids)
     {
         $action = "del_email";
         $options = array(
             'email_ids' => $email_ids,
-            'sid_token' => $this->sid_token
+            'sid_token' => $sid_token
         );
 
         return $this->_transmit($action, $options);
