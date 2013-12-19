@@ -2,6 +2,9 @@
 
 A Simple Library for [GuerrillaMail](http://www.guerrillamail.com).
 
+## Build Status
+Dev: [![Build Status](https://travis-ci.org/taion809/GuerrillaMail.png?branch=dev)](https://travis-ci.org/taion809/GuerrillaMail)
+
 ## Requirements
 
 * PHP 5.3+, however, [PHP 5.5](http://php.net) is recommended.
