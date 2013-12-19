@@ -16,6 +16,14 @@ class GuerrillaMail
      */
     private $domains = array(
         'guerrillamailblock.com',
+        "guerrillamail.com",
+        "guerrillamail.org",
+        "guerrillamail.net",
+        "guerrillamail.biz",
+        "guerrillamail.de",
+        "sharklasers.com",
+        "grr.la",
+        "spam4.me",
     );
 
     /**
@@ -173,11 +181,6 @@ class GuerrillaMail
         if($response['status'] == 'error')
         {
             return false;
-        }
-
-        if(isset($response['data']['sid_token']))
-        {
-            $this->sid_token = $response['data']['sid_token'];
         }
 
         return $response['data'];
