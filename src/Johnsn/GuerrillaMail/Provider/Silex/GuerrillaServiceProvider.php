@@ -12,12 +12,11 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 use Johnsn\GuerrillaMail\GuerrillaMail as GuerrillaClient;
-use Johnsn\GuerrillaMail\GuerrillaConnect\CurlConnection as GuerrillaConnection;
+use Johnsn\GuerrillaMail\Client\CurlConnection as GuerrillaConnection;
 
 /**
- * Symfony Routing component Provider for URL generation.
- *
- * @author Fabien Potencier <fabien@symfony.com>
+ * Class GuerrillaServiceProvider
+ * @package Johnsn\GuerrillaMail\Provider\Silex
  */
 class GuerrillaServiceProvider implements ServiceProviderInterface
 {

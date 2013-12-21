@@ -1,31 +1,23 @@
 <?php
 
-namespace Johnsn\GuerrillaMail\GuerrillaConnect;
+namespace Johnsn\GuerrillaMail\Client;
 
 /**
  * Class CurlConnection
- * @package Johnsn\GuerrillaMail\GuerrillaConnect
+ * @package Johnsn\GuerrillaMail\Client
  */
 class CurlConnection extends Connection
 {
     /**
      * @param string $ip Client IP
-     * @param string $agent Client Agent
+     * @param string $agent Client UserAgent
      * @param string $url API Endpoint
      */
-    public function __construct($ip, $agent = '', $url = '')
+    public function __construct($ip, $agent = 'GuerrillaMail_Library', $url = 'http://api.guerrillamail.com/ajax.php')
     {
         $this->ip = $ip;
-
-        if(!empty($agent))
-        {
-            $this->agent = $agent;
-        }
-
-        if(!empty($url))
-        {
-            $this->url = $url;
-        }
+        $this->agent = $agent;
+        $this->url = $url;
     }
 
     /**
@@ -43,8 +35,7 @@ class CurlConnection extends Connection
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        if(isset($query['sid_token']))
-        {
+        if(isset($query['sid_token'])) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Cookie: PHPSESSID=' . $query['sid_token']));
         }
 
@@ -52,18 +43,7 @@ class CurlConnection extends Connection
 
         $response = json_decode($output, true);
 
-        $data = array();
-        switch(curl_getinfo($ch, CURLINFO_HTTP_CODE))
-        {
-            case 200:
-                $data['status'] = 'success';
-                $data['data'] = $response;
-                break;
-            default:
-                $data['status'] = 'error';
-                $data['message'] = $response;
-                break;
-        }
+        $data = $this->buildResponseObject(curl_getinfo($ch, CURLINFO_HTTP_CODE), $response);
 
         curl_close($ch);
         return $data;
@@ -89,18 +69,7 @@ class CurlConnection extends Connection
 
         $response = json_decode($output, true);
 
-        $data = array();
-        switch(curl_getinfo($ch, CURLINFO_HTTP_CODE))
-        {
-            case 200:
-                $data['status'] = 'success';
-                $data['data'] = $response;
-                break;
-            default:
-                $data['status'] = 'error';
-                $data['message'] = $response;
-                break;
-        }
+        $data = $this->buildResponseObject(curl_getinfo($ch, CURLINFO_HTTP_CODE), $response);
 
         curl_close($ch);
         return $data;

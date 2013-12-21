@@ -7,13 +7,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Johnsn\GuerrillaMail\GuerrillaConnect;
+namespace Johnsn\GuerrillaMail\Client;
 
 /**
  * Class Connection
- * @package Johnsn\GuerrillaMail\GuerrillaConnect
+ * @package Johnsn\GuerrillaMail\Client
  */
-abstract class Connection
+abstract class Connection implements ConnectionInterface
 {
     /**
      * GuerrillaMail api endpoint.
@@ -43,21 +43,28 @@ abstract class Connection
     public function build_query($action, array $options)
     {
         $query = "f={$action}";
-        foreach($options as $key => $value)
-        {
-            if(!is_array($value))
-            {
+        foreach($options as $key => $value) {
+            if(!is_array($value)) {
                 $query .= "&{$key}=" . urlencode($value);
                 continue;
             }
 
-            foreach($value as $a_key => $a_value)
-            {
+            foreach($value as $a_key => $a_value) {
                 $query .= "&{$key}%5B%5D=" . urlencode($a_value);
             }
         }
 
         return $query;
+    }
+
+    protected function buildResponseObject($code, $data)
+    {
+        $response = array('status' => $code, 'data' => $data);
+        if($code >= 300) {
+            $response['status'] = false;
+        }
+
+        return $response;
     }
 
     /**
