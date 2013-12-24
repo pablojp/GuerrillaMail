@@ -23,7 +23,7 @@ This library uses composer, you can install it like so
 
 ```
 
-Replace version with the desired version or branch.  
+Replace `version` with the desired version or branch.  
 You can find additional installation details on this project's [packagist page](https://packagist.org/packages/johnsn/guerrillamail)
 
 ## Example Usage
@@ -40,16 +40,17 @@ use Johnsn\GuerrillaMail\GuerrillaMail;
 //The second parameter is the client's Browser Agent.
 //There is an optional third parameter to set the api endpoint
 $connection = new CurlConnection("127.0.0.1", "GuerrillaMail_Library");
-
-//The second parameter is the client's sid (optional)
-$gm = new GuerrillaMail($connection);
+$client = new GuerrillaMail($connection);
 
 //Obtain an email address
-$response = $gm->get_email_address();
+$response = $client->getEmailAddress();
 
 //Fetch user's latest emails.
-$emails = $gm->check_email();
+$emails = $client->checkEmail($response['sid_token']);
 ```
+
+## Example Application
+Checkout [ApeMailer](https://github.com/taion809/ApeMailer), it's a silex application with an angularjs front end.
 
 ## License
 
