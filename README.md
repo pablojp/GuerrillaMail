@@ -2,8 +2,15 @@
 
 A Simple Library for [GuerrillaMail](http://www.guerrillamail.com).
 
+If you use this library, drop me a line and let me know I'm curious.
+
 ## Build Status
 Dev: [![Build Status](https://travis-ci.org/taion809/GuerrillaMail.png?branch=dev)](https://travis-ci.org/taion809/GuerrillaMail)
+
+#### Build Notes
+The Dev and Master branches have breaking compatibility changes.  I am working to make the package PSR compliant.
+
+There are a couple of other problems as well, in `master` there is no need to pass the sid_token to subsequent method calls (like checkEmail) because the token is stored in the client object.  I have since changed this and the sid_token is returned after the method call and each method takes it as a parameter.
 
 ## Requirements
 
